@@ -7,13 +7,23 @@ document.getElementById("clear").addEventListener("click", clearDisplay);
 document.getElementById("delete").addEventListener("click", deleteCharacter);
 
 calculator.addEventListener("click", function(e){
-    if(e.target && e.target.classList.contains("num") && !(e.target.id === "point" && currentInput.includes("."))) {
+    if(e.target && e.target.classList.contains("num") && !(e.target.id === "point" && currentInput.includes(".")) && currentInput.length < 11) {
         currentInput += e.target.innerText;
+        bottomOutput.innerText = currentInput;
+    }
+    
+    else if(e.target && e.target.classList.contains("btn") && !(e.target.id === "equals") && currentInput != "" && currentInput != ".") {
+        currentStored += parseFloat(currentInput);
+        currentInput = "";
+        
+        topOutput.innerText = currentStored;
         bottomOutput.innerText = currentInput;
     }
 });
 
+
 var currentInput = "";
+var currentStored = "";
 
 function calculate() {
     
@@ -21,7 +31,8 @@ function calculate() {
 
 function clearDisplay() {
     currentInput = "";
-    topOutput.innetText = "";
+    currentStored = "";
+    topOutput.innerText = "";
     bottomOutput.innerText = "";
 }
 
