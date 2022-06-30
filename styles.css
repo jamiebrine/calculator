@@ -21,13 +21,14 @@ body {
   display: grid;
   padding: 32px;
   grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(5, 1fr);
+  grid-template-rows: repeat(6, 1fr);
   gap: 8px;
 }
 
 .calc-element {
   border-radius: 16px;
   color: white;
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -60,8 +61,18 @@ body {
 
 #display {
   grid-column-end: span 5;
+  grid-row-end: span 2;
   background-color: rgba(255, 255, 255, 0.89);
   border-radius: 16px;
+  color: black;
+
+  font-size: 60px;
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: right;
+  align-items: center;
+  padding: 16px;
 }
 
 #clear {
