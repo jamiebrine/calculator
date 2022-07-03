@@ -2,43 +2,65 @@ const topOutput = document.getElementById("top-display");
 const bottomOutput = document.getElementById("bottom-display");
 const calculator = document.getElementById("main");
 
-document.getElementById("equals").addEventListener("click", calculate);
+calculator.addEventListener("click", function (e) {
+  if (
+    e.target &&
+    e.target.classList.contains("num") &&
+    !(e.target.id === "point" && currentInput.includes("."))
+  ) {
+    if (currentOperator === "=") {
+      currentInput = "";
+      currentOperator = "+";
+      runningTotal = 0;
+      topOutput.innerText = "";
+    }
+    console.log("hasdfg");
+    currentInput += e.target.innerText;
+    bottomOutput.innerText = currentInput;
+  } else if (
+    e.target &&
+    e.target.classList.contains("btn") &&
+    currentInput != "" &&
+    currentInput != "."
+  ) {
+    if (currentOperator === "+") runningTotal += parseFloat(currentInput);
+    else if (currentOperator === "-") runningTotal -= parseFloat(currentInput);
+    else if (currentOperator === "*") runningTotal *= parseFloat(currentInput);
+    else if (currentOperator === "/") runningTotal /= parseFloat(currentInput);
+    else if (currentOperator === "=") topOutput.innerText = "";
+
+    topOutput.innerText += parseFloat(currentInput) + e.target.innerText;
+    currentOperator = e.target.innerText;
+
+    currentInput = "";
+    bottomOutput.innerText = currentInput;
+
+    if (e.target.id === "equals") {
+      bottomOutput.innerText = runningTotal;
+      currentInput = runningTotal;
+    }
+  }
+});
+
 document.getElementById("clear").addEventListener("click", clearDisplay);
 document.getElementById("delete").addEventListener("click", deleteCharacter);
 
-calculator.addEventListener("click", function(e){
-    if(e.target && e.target.classList.contains("num") && !(e.target.id === "point" && currentInput.includes(".")) && currentInput.length < 11) {
-        currentInput += e.target.innerText;
-        bottomOutput.innerText = currentInput;
-    }
-    
-    else if(e.target && e.target.classList.contains("btn") && !(e.target.id === "equals") && currentInput != "" && currentInput != ".") {
-        currentStored += parseFloat(currentInput);
-        currentInput = "";
-        
-        topOutput.innerText = currentStored;
-        bottomOutput.innerText = currentInput;
-    }
-});
-
-
+var runningTotal = 0;
+var currentOperator = "+";
 var currentInput = "";
-var currentStored = "";
-
-function calculate() {
-    
-}
 
 function clearDisplay() {
-    currentInput = "";
-    currentStored = "";
-    topOutput.innerText = "";
-    bottomOutput.innerText = "";
+  runningTotal = 0;
+  currentInput = "";
+  currentOperator = "+";
+
+  topOutput.innerText = "";
+  bottomOutput.innerText = "";
 }
 
 function deleteCharacter() {
-    if(!(currentInput === "")) {
-        currentInput = currentInput.slice(0, -1);
-        bottomOutput.innerText = currentInput;
-    }
+  if (!(currentInput === "")) {
+    currentInput = currentInput.slice(0, -1);
+    bottomOutput.innerText = currentInput;
+  }
 }
